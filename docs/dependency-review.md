@@ -1,6 +1,7 @@
 # Dependency review: go-redis
 
-- Decision: approved for the isolated `starter/redis` package.
+- Decision: approved for the independently versioned
+  `github.com/spice-framework/starter-redis` module.
 - Version: `github.com/redis/go-redis/v9` v9.21.0.
 - Upstream: <https://github.com/redis/go-redis>.
 - License: BSD-2-Clause; retained in the vendored module license.
@@ -21,9 +22,12 @@
   defaults instead of inheriting CPU- or process-environment-dependent
   behavior. `Open` performs no network I/O and returns exact lifecycle cleanup.
 - Integration: a tagged test runs against the official Redis 8.4.0 Alpine
-  image (`sha256:4eec4565e45aa0b3966554c866bc73211e281b0b3d89fe9a33c982e6faca809d`)
-  and exercises connection, ping, bounded typed JSON cache operations,
-  expiration, cancellation, and cleanup.
+  multi-platform index (`redis:8.4.0-alpine3.22`,
+  `sha256:4eec4565e45aa0b3966554c866bc73211e281b0b3d89fe9a33c982e6faca809d`)
+  and exercises authenticated connection, independent pools, ping, bounded
+  typed JSON cache operations, expiration, cancellation, idempotent cleanup,
+  and credential-safe authentication failures on amd64 CI. The reviewed index
+  also provides arm64.
 
 Primary references:
 

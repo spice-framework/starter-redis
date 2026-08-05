@@ -1,0 +1,93 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: spice-framework/.github/.github/workflows/go-verify.yml@130369b5162d2ae38084485f6639e75f2b6e382f
+    with:
+      go-version: 1.26.5
+
+  quality:
+    name: Repository quality contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+      - name: Set up exact Go toolchain
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: 1.26.5
+          cache-dependency-path: |
+            go.sum
+            tools/go.sum
+      - name: Run complete local quality contract
+        run: go run ./internal/qualitygate -mode=verify
+
+  core-compatibility:
+    name: Spice core (${{ matrix.line }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        line: [minimum, current]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Set up exact Go toolchain
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: 1.26.5
+          cache-dependency-path: go.sum
+      - name: Verify the ${{ matrix.line }} core line
+        run: go run ./internal/corecompat -line=${{ matrix.line }}
+
+  redis:
+    name: Redis 8.4.0 integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Set up exact Go toolchain
+        uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+        with:
+          go-version: 1.26.5
+          cache-dependency-path: go.sum
+      - name: Start pinned authenticated Redis
+        run: >-
+          docker run --detach --name spice-redis --publish 6379:6379
+          redis@sha256:4eec4565e45aa0b3966554c866bc73211e281b0b3d89fe9a33c982e6faca809d
+          redis-server --requirepass spice-test --appendonly no
+      - name: Wait for Redis
+        shell: bash
+        run: |
+          for attempt in {1..60}; do
+            if docker exec spice-redis redis-cli -a spice-test ping 2>/dev/null | grep -q PONG; then
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs spice-redis
+          exit 1
+      - name: Exercise real Redis behavior
+        env:
+          SPICE_REDIS_TEST_URL: redis://:spice-test@127.0.0.1:6379/0
+        run: go test -tags=integration -race -shuffle=on -count=1 ./...
+      - name: Preserve Redis diagnostics
+        if: always()
+        run: docker logs spice-redis
+      - name: Stop Redis
+        if: always()
+        run: docker rm --force spice-redis

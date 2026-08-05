@@ -1,23 +1,23 @@
 package redis
 
-import spicestarter "github.com/spice-framework/spice/starter"
+import spicestarter "github.com/spice-framework/spice/annotation/sdk/starter"
 
 // Manifest returns Redis starter compatibility and review metadata.
 func Manifest() spicestarter.Manifest {
 	return spicestarter.Must(spicestarter.Spec{
 		Schema:    spicestarter.Schema,
-		ID:        "github.com/spice-framework/spice/starter/redis",
+		ID:        "github.com/spice-framework/starter-redis",
 		Version:   "0.1.0-dev",
-		Module:    "github.com/spice-framework/spice",
+		Module:    "github.com/spice-framework/starter-redis",
 		SpiceAPI:  spicestarter.APIVersion,
 		MinimumGo: "1.26",
 		License:   "Apache-2.0",
-		Review:    "docs/dependency-reviews/go-redis.md",
+		Review:    "docs/dependency-review.md",
 		Activation: spicestarter.Activation{
 			Mode: spicestarter.ActivationExplicitConstructor,
 			EntryPoints: []spicestarter.EntryPoint{
 				{
-					Package: "github.com/spice-framework/spice/starter/redis",
+					Package: "github.com/spice-framework/starter-redis",
 					Symbol:  "Open",
 				},
 			},
