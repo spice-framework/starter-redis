@@ -47,7 +47,7 @@ Go 1.26.5 is mandatory:
 
 ```text
 make check
-make release-parity
+make release-rehearsal
 make verify
 make verify-release
 ```
@@ -58,13 +58,12 @@ vet, allowlisted lint and nil safety, gosec, govulncheck, shuffled race tests,
 at least 85% product coverage, and offline vendor builds. Compatibility tests
 use isolated alternate modfiles and never rewrite committed dependency files.
 
-Release parity validates the exact `spice-dev` renderer and
-`spice-library-release-verify` verifier authorized by `go.mod`, then runs the
-renderer and retained repository builder twice each, entirely from `vendor`
-with network and workspace resolution disabled. It compares archive entries
-after normalizing only the builders' documented root-directory spelling,
-requires equivalent SBOM package and dependency facts, verifies both checksum files, and forbids
-rehearsal signatures on Windows and Linux.
+Release rehearsal validates the exact `spice-dev` renderer and
+`spice-library-release-verify` verifier authorized by `go.mod`, then renders
+the same inert plan twice entirely from `vendor` with network and workspace
+resolution disabled. It requires byte-identical outputs, canonical checksums,
+central-renderer SPDX provenance, and no rehearsal signatures on Windows and
+Linux.
 
 Real-system acceptance runs against the pinned Redis 8.4.0 multi-platform
 image with password authentication. It covers independent pools, explicit
@@ -87,6 +86,7 @@ See [the dependency review](docs/dependency-review.md) and
 The repository builds deterministic source-only releases with an SPDX 2.3
 SBOM, SHA-256 checksums, and Ed25519 signatures. See the exact artifact and
 clean-tag ceremony in [the release guide](docs/releasing.md).
-The protected central workflow is the release authority. The retained
-repository builder remains only an unsigned parity oracle and is held to the
-dual-builder contract during the migration.
+The protected central workflow is the sole release authority. It validates the
+candidate without credentials, renders and signs with immutable trusted code,
+authenticates the result with an independent verifier, and publishes only after
+separate protected approvals.

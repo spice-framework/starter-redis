@@ -34,7 +34,7 @@ func main() {
 }
 
 func execute() int {
-	mode := flag.String("mode", "verify", "verification mode: check, fmt, release-parity, verify, or verify-release")
+	mode := flag.String("mode", "verify", "verification mode: check, fmt, release-rehearsal, verify, or verify-release")
 	flag.Parse()
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
@@ -65,8 +65,8 @@ func run(ctx context.Context, root, mode string) error {
 	formatting := step{"formatting", func() error { return format(ctx, root, false) }}
 	modules := step{"module and vendor", func() error { return checkModule(ctx, root) }}
 	vet := step{"go vet", func() error { return command(ctx, root, nil, "go", "vet", "./...") }}
-	release := step{"central and retained release parity", func() error {
-		return releaseParity(ctx, root)
+	release := step{"deterministic central release rehearsal", func() error {
+		return releaseRehearsal(ctx, root)
 	}}
 	var steps []step
 	switch mode {
@@ -74,9 +74,9 @@ func run(ctx context.Context, root, mode string) error {
 		steps = []step{identity, dependencies, formatting, modules, vet}
 	case "fmt":
 		steps = []step{{"formatting", func() error { return format(ctx, root, true) }}}
-	case "release-parity":
+	case "release-rehearsal":
 		steps = []step{identity, release}
-	case "verify":
+	case "verify", "verify-release":
 		steps = []step{
 			identity,
 			dependencies,
@@ -88,8 +88,9 @@ func run(ctx context.Context, root, mode string) error {
 			{"shuffled race tests and coverage", func() error { return testsAndCoverage(ctx, root) }},
 			{"offline vendor", func() error { return offline(ctx, root) }},
 		}
-	case "verify-release":
-		steps = []step{identity, release}
+		if mode == "verify-release" {
+			steps = append(steps, release)
+		}
 	default:
 		return fmt.Errorf("unknown mode %q", mode)
 	}
