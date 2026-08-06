@@ -12,12 +12,12 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/redis/go-redis/v9 v9.21.0 h1:FPBE4hhbAke+TLmcY3WkpbDffJEomdqPn3HYiqAtL9E=
 github.com/redis/go-redis/v9 v9.21.0/go.mod h1:v/M13XI1PVCDcm01VtPFOADfZtHf8YW3baQf57KlIkA=
-github.com/spice-framework/development v0.0.0-20260806121906-963bb6676069 h1:3ZfZwoXihTJ9+N+v3aHLiHTPGpGa/fxr1ifCi0uGGNw=
-github.com/spice-framework/development v0.0.0-20260806121906-963bb6676069/go.mod h1:0lIxjVtv+p4iTrvLJm05OjimS2MSrIqM1xPR7Q0GHEg=
+github.com/spice-framework/development v0.0.0-20260806132124-4c308d1b9fda h1:2NwMsYJ6BqeA5johEh5gXxqEyf5RoVsKZyNH4AMR4Yo=
+github.com/spice-framework/development v0.0.0-20260806132124-4c308d1b9fda/go.mod h1:0lIxjVtv+p4iTrvLJm05OjimS2MSrIqM1xPR7Q0GHEg=
 github.com/spice-framework/spice v0.0.0-20260805222830-a2ecd56df246 h1:IAPcr8bmwyeNQWME5bUWg/NvDVGoBJY+TRumFXMPXR8=
 github.com/spice-framework/spice v0.0.0-20260805222830-a2ecd56df246/go.mod h1:dBZV5UZcbY6pzhfGNtvAwQIJ8YsFna+jf1SAlmukJfk=
-github.com/spice-framework/toolchain v0.0.0-20260806054457-a83d9b58034c h1:73YMuiirxQEEgdytN47xTFDtTWOoNdW7kSS+IV/WaHc=
-github.com/spice-framework/toolchain v0.0.0-20260806054457-a83d9b58034c/go.mod h1:/U0xhEiz4xGpiCCS560gjgDiixDh5lR4NXVbVPmrmh8=
+github.com/spice-framework/toolchain v0.0.0-20260806133530-71211498297c h1:US3ChgXYhIXFZ5VNYQ2BjuiTbStVNEyC1cBjxN3SCXM=
+github.com/spice-framework/toolchain v0.0.0-20260806133530-71211498297c/go.mod h1:/U0xhEiz4xGpiCCS560gjgDiixDh5lR4NXVbVPmrmh8=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
 github.com/zeebo/xxh3 v1.1.0 h1:s7DLGDK45Dyfg7++yxI0khrfwq9661w9EN78eP/UZVs=
