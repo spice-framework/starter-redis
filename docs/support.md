@@ -26,8 +26,9 @@ branch name is never written to release metadata or used by applications.
 The pinned central signer and independent verifier power the protected reusable
 production workflow. The reviewed repository-specific trust anchor is
 `security/release/ed25519-public.pem` (SHA-256 fingerprint
-`43f1fa154a4399a1cb2a241bf7d96ffb62f48b91cadd0de7960c9cce77abd116`).
-Its private key exists only in the protected `release-signing` environment;
-`release-publish` contains no signing secret. Windows and Linux CI still compare
+`342bf13259377a08cec8d6c5956da9ac3ff637e9b3428585738b55408d4e2636`).
+Its private key exists only as repository Actions secret
+`SPICE_LIBRARY_RELEASE_SIGNING_KEY`, and the caller explicitly maps only that
+secret to the protected reusable workflow. Windows and Linux CI still compare
 unsigned central and retained outputs under vendor-only offline resolution; the
 retained command is only a parity oracle until the first signed cutover passes.

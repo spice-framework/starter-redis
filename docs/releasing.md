@@ -103,12 +103,13 @@ openssl genpkey -algorithm ED25519 -out starter-redis-release-key.pem
 Review and commit the matching public key as
 `security/release/ed25519-public.pem`. Its reviewed SHA-256 public-key
 fingerprint is
-`43f1fa154a4399a1cb2a241bf7d96ffb62f48b91cadd0de7960c9cce77abd116`.
-Store the private key only as
-`SPICE_LIBRARY_RELEASE_SIGNING_KEY` in the protected `release-signing`
-environment. Configure both `release-signing` and `release-publish` with the
-required human reviewers. The private key is never copied into source, SBOM,
-logs, or release output.
+`342bf13259377a08cec8d6c5956da9ac3ff637e9b3428585738b55408d4e2636`.
+Store the private key only as repository Actions secret
+`SPICE_LIBRARY_RELEASE_SIGNING_KEY`. The caller explicitly maps only that
+secret to the protected reusable workflow; secret inheritance and additional
+mappings are forbidden. Configure both `release-signing` and `release-publish`
+with the required human reviewers. The private key is never copied into source,
+SBOM, logs, or release output.
 
 Verify downloaded assets before use:
 
@@ -127,12 +128,13 @@ PowerShell users can compare the first checksum column with
 
 ## Release ceremony
 
-1. Confirm the reviewed public anchor, protected `release-signing` secret, and
-   both protected environments exist. Do not proceed if any control is absent.
+1. Confirm the reviewed public anchor, repository signing secret, and both
+   protected environments exist. Do not proceed if any control is absent.
 2. Run `make verify` once on the final clean commit, then `make verify-release`.
 3. Create and push an annotated canonical `vX.Y.Z` tag.
 4. The caller invokes the organization workflow at its immutable commit and
-   passes only the exact module path; it maps no secrets.
+   passes only the exact module path and explicitly mapped repository signing
+   secret.
 5. The workflow verifies, signs, independently authenticates, and publishes the
    artifacts through its separated protected environments.
 6. Download the published assets and independently verify the signature,
