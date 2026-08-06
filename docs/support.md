@@ -10,7 +10,7 @@
 | Transport security | `rediss` with TLS 1.2 minimum; plaintext requires explicit opt-in |
 | Authentication | Required by default; unauthenticated access requires a separate explicit opt-in |
 | Real-system artifact | `redis:8.4.0-alpine3.22` index digest `sha256:4eec4565e45aa0b3966554c866bc73211e281b0b3d89fe9a33c982e6faca809d` |
-| Central release tools | `github.com/spice-framework/development/cmd/spice-dev` at `v0.0.0-20260806052122-9025218a91c0`; `github.com/spice-framework/toolchain/cmd/spice-library-release-verify` at `v0.0.0-20260806054457-a83d9b58034c` |
+| Central release tools | `github.com/spice-framework/development/cmd/spice-dev` at `v0.0.0-20260806121906-963bb6676069`; `github.com/spice-framework/toolchain/cmd/spice-library-release-verify` at `v0.0.0-20260806054457-a83d9b58034c` |
 
 The first preview tag will define the first published minimum Spice version.
 Until then, `spice-compatibility.json` is the sole compatibility boundary
