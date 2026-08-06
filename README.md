@@ -58,11 +58,12 @@ vet, allowlisted lint and nil safety, gosec, govulncheck, shuffled race tests,
 at least 85% product coverage, and offline vendor builds. Compatibility tests
 use isolated alternate modfiles and never rewrite committed dependency files.
 
-Release parity runs the exact `spice-dev` tool authorized by `go.mod` and the
-retained repository builder twice each, entirely from `vendor` with network and
-workspace resolution disabled. It compares archive entries after normalizing
-only the builders' documented root-directory spelling, requires equivalent
-SBOM package and dependency facts, verifies both checksum files, and forbids
+Release parity validates the exact `spice-dev` renderer and
+`spice-library-release-verify` verifier authorized by `go.mod`, then runs the
+renderer and retained repository builder twice each, entirely from `vendor`
+with network and workspace resolution disabled. It compares archive entries
+after normalizing only the builders' documented root-directory spelling,
+requires equivalent SBOM package and dependency facts, verifies both checksum files, and forbids
 rehearsal signatures on Windows and Linux.
 
 Real-system acceptance runs against the pinned Redis 8.4.0 multi-platform
