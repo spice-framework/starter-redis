@@ -10,6 +10,7 @@
 | Transport security | `rediss` with TLS 1.2 minimum; plaintext requires explicit opt-in |
 | Authentication | Required by default; unauthenticated access requires a separate explicit opt-in |
 | Real-system artifact | `redis:8.4.0-alpine3.22` index digest `sha256:4eec4565e45aa0b3966554c866bc73211e281b0b3d89fe9a33c982e6faca809d` |
+| Release parity tool | `github.com/spice-framework/development/cmd/spice-dev` at `v0.0.0-20260806034648-1856466df09d` |
 
 The first preview tag will define the first published minimum Spice version.
 Until then, `spice-compatibility.json` is the sole compatibility boundary
@@ -21,3 +22,7 @@ does not mutate the committed module or vendor graph.
 A release may raise the minimum only through an intentional `go.mod` change,
 an updated compatibility contract, and green minimum/current jobs. A moving
 branch name is never written to release metadata or used by applications.
+
+The pinned central tool renders unsigned rehearsal candidates only. Windows
+and Linux CI compare them with the retained builder under vendor-only offline
+resolution; the retained command remains the signed production authority.
