@@ -1,5 +1,7 @@
 # Spice Redis starter
 
+Unified documentation: [spiceframework.dev/integrations/redis](https://spiceframework.dev/integrations/redis/).
+
 `github.com/spice-framework/starter-redis` is the independently versioned,
 opt-in Redis integration for Spice. It provides a secure, deterministic
 go-redis client pool and a typed JSON implementation of Spice's cache
