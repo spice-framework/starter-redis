@@ -5,7 +5,7 @@ go 1.26.0
 toolchain go1.26.5
 
 require (
-	github.com/redis/go-redis/v9 v9.21.0
+	github.com/redis/go-redis/v9 v9.22.0
 	github.com/spice-framework/spice v0.0.0-20260805222830-a2ecd56df246
 )
 
@@ -15,6 +15,7 @@ require (
 	github.com/spice-framework/toolchain v0.0.0-20260806133530-71211498297c // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/mod v0.38.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
 )
 
 tool (
